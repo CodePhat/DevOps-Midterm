@@ -1,0 +1,19 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
+dist/
+
+# Environment Variables (CRITICAL: DO NOT REMOVE)
+.env
+.env.local
+
+# Docker
+.docker
