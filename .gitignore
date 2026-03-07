@@ -6,14 +6,19 @@ npm-debug.log*
 # OS Files
 .DS_Store
 Thumbs.db
+.vscode/
 
 # Dependencies
 node_modules/
 dist/
 
-# Environment Variables (CRITICAL: DO NOT REMOVE)
+# Environment Variables 
 .env
 .env.local
 
 # Docker
 .docker
+
+# Uploads 
+public/uploads/*
+!public/uploads/.gitkeep
