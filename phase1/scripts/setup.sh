@@ -32,5 +32,3 @@ sudo mkdir -p /var/www/app/public/uploads
 sudo chown -R $USER:$USER /var/www/app
 
 echo "--- Setup Complete! ---"
-
-# tEST
