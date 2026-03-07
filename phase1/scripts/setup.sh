@@ -33,3 +33,5 @@ sudo chown -R $USER:$USER /var/www/app
 
 echo "--- Setup Complete! ---"
 
+
+# Minh's Test 2
