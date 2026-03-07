@@ -1,40 +1,34 @@
 #!/bin/bash
+# Phase 1 Automation Script for Node.js + MongoDB Stack
 
-# =================================================================
-# Project: Cloud Migration & Containerization Midterm
-# Script: setup.sh (Phase 1)
-# Description: Prepares Ubuntu server with Node.js, Nginx, and Docker.
-# =================================================================
-
-# 1. Update System Packages
-echo "--- Updating system packages ---"
+echo "--- Starting System Setup ---"
 sudo apt-get update && sudo apt-get upgrade -y
 
-# 2. Install Essential Tools
-echo "--- Installing build-essential and curl ---"
-sudo apt-get install -y build-essential curl git wget
-
-# 3. Install Node.js (Version 20 LTS)
-echo "--- Installing Node.js ---"
+# 1. Install Node.js 20 LTS
+echo "--- Installing Node.js 20 ---"
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt-get install -y node.js
 
-# 4. Install Nginx (For Phase 2 Reverse Proxy)
-echo "--- Installing Nginx ---"
-sudo apt-get install -y nginx
-sudo systemctl enable nginx
-sudo systemctl start nginx
+# 2. Install MongoDB (Required for this app's 'Real' mode)
+echo "--- Installing MongoDB ---"
+sudo apt-get install -y gnupg curl
+curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
+   sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
+   --dearmor
+echo "deb [ [arch=amd64,arm64] signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org
+sudo systemctl enable mongod
+sudo systemctl start mongod
 
-# 5. Install Docker & Docker Compose (For Phase 3)
-echo "--- Installing Docker & Docker Compose ---"
-sudo apt-get install -y docker.io docker-compose
+# 3. Install Nginx & Docker (Prepping for Phase 2 & 3)
+echo "--- Installing Nginx and Docker ---"
+sudo apt-get install -y nginx docker.io docker-compose
 sudo usermod -aG docker $USER
 
-# 6. Create Application Directory Structure
-echo "--- Creating app directories for logs and uploads ---"
-sudo mkdir -p /var/www/app/logs
-sudo mkdir -p /var/www/app/uploads
+# 4. Prepare App Directory
+echo "--- Preparing Application Folders ---"
+sudo mkdir -p /var/www/app/public/uploads
 sudo chown -R $USER:$USER /var/www/app
 
-echo "--- SETUP COMPLETE ---"
-echo "Please log out and log back in for Docker group changes to take effect."
+echo "--- Setup Complete! ---"
